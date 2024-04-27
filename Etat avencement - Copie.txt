@@ -1,0 +1,4 @@
+Etat avencement :
+	toutes les migrations.
+	tous les modeles avec relations entres les tables .
+	creation des controleurs et fonctions show et index pour tous les controlleurs .
