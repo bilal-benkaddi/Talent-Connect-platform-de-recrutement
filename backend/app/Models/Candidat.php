@@ -14,6 +14,7 @@ class Candidat extends Model
         'prenom',
         'date_de_naissance',
         'email',
+        'image',
         'password',
         'telephone',
         'Adresse_postale'
