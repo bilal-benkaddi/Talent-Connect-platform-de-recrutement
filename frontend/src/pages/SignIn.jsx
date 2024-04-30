@@ -1,5 +1,5 @@
 import  { useState } from 'react';
-import axios from 'axios';
+import { AxiosClient } from '../api/axios';
 //import { useHistory } from 'react-router-dom';  
 
 
@@ -10,18 +10,9 @@ const SignIn = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('/api/axios', { email, password }); // Replace '/api/signin' with your actual backend signin endpoint
-      // Assuming your backend returns a token upon successful authentication
-      const token = response.data.token;
-      // Save token to local storage or session storage for future requests
-      localStorage.setItem('token', token);
-      // Redirect user to dashboard page upon successful authentication
-      //history.push('/dashbord');
-    } catch (error) {
-      console.error('Sign-in error:', error);
-      // Handle sign-in errors (e.g., display error message to user)
-    }
+      await AxiosClient.get('/sanctum/csrf-cookie');
+      const response = await AxiosClient.post('/api/login', { email, password }); // Replace '/api/signin' with your actual backend signin endpoint
+     console.log(response);
   };
 
   return (
