@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthenticateCandidat
@@ -15,6 +16,11 @@ class AuthenticateCandidat
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
+        if(!Auth::guard("candidat")->check()){
+            return redirect()->route("candidats.login")->with("error","login first");
+        }else{
+             return $next($request);
+        }
+       
     }
 }

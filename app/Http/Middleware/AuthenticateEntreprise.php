@@ -18,8 +18,9 @@ class AuthenticateEntreprise
     {
         if(!Auth::guard("entreprise")->check()){
             return redirect()->route("login")->with("error","login first");
-            ;
+        }else{
+            return $next($request);
         }
-        return $next($request);
+        
     }
 }

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 
 const index = ({ candidats }) => {
+   
     useEffect(() => {
         console.log("candidats", candidats);
     }, []);
@@ -8,7 +9,7 @@ const index = ({ candidats }) => {
         return <li>{candidat.nom}</li>;
     });
     return (
-        <div >
+        <div > 
             <ol>{candidatslist}</ol>
         </div>
     );

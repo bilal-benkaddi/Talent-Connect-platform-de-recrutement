@@ -7,7 +7,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function LoginEntreprise({ status, canResetPassword }) {
+export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -23,15 +23,15 @@ export default function LoginEntreprise({ status, canResetPassword }) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('login.entreprise'));
+        post(route("candidats.login"));
     };
 
     return (
         <GuestLayout>
-            <Head title="Entreprise Log in" />
+            <Head title="Log in" />
 
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
-
+            <h1>Candidats login</h1>
             <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="email" value="Email" />

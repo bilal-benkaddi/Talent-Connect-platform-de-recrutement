@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Models\Candidat;
 use Illuminate\Http\Request;
 use App\Models\Profilecandidat;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class CandidatController extends Controller
@@ -13,7 +14,6 @@ class CandidatController extends Controller
     public function index()
     {
         $candidats = Candidat::all();
-
         return Inertia::render('candidats/index', [
             'candidats' => $candidats,
         ]);

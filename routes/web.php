@@ -43,10 +43,14 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/dashboardone', function () {
-    return Inertia::render('Welcome');
-})->middleware(['entreprise'])->name('dashboardone');
 
+Route::prefix("candidats")->name("candidats.")->group(function(){
+    require __DIR__.'/candidat.php';
+});
+
+Route::get('/candidats',  [CandidatController::class , "index"])->name('candidats.index');
+
+/*
 
 Route::get('/candidats',  [CandidatController::class , "index"])->name('candidats.index');
 Route::get('/candidats/create',  [CandidatController::class , "create"])->name('candidats.create');
@@ -62,15 +66,4 @@ Route::resource('candidatures', CandidatureController::class);
 Route::resource('entreprises', EntrepriseController::class);
 Route::resource('offres', OffreController::class);
 
-
-Route::get('/login/candidat', function () {
-    return inertia('Auth/LoginCandidat');
-})->name('login.candidat');
-
-Route::post('/login/candidat', [LoginCandidatController::class, 'authenticate']);
-
-Route::get('/login/entreprise', function () {
-    return inertia('Auth/LoginEntreprise');
-})->name('login.entreprise');
-
-Route::post('/login/entreprise', [LoginEntrepriseController::class, 'authenticate']);
+ */
