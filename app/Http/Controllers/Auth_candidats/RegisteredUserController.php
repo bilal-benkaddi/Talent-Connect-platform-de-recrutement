@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Auth_candidats;
 
-use App\Http\Controllers\Controller;
-use App\Models\Candidat;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Candidat;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
 
 class RegisteredUserController extends Controller
 {
@@ -46,7 +47,13 @@ class RegisteredUserController extends Controller
 
 
         $Candidat = Candidat::create($validated);
+        $token = app('auth.password')->broker('candidats')->createToken($Candidat);
 
+        DB::table('password_reset_tokens')->insert([
+            'email' => $Candidat->email,
+            'token' => $token,
+            'created_at' => now(),
+        ]);
         event(new Registered($Candidat));
 
         Auth::login($Candidat);

@@ -115,9 +115,14 @@ return [
         ],
         'candidats' => [
             'provider' => 'candidats',
-            'table' => 'password_reset_tokens',
+            'table' => 'password_resets',
             'expire' => 60,
-            'throttle' => 60,
+        ],
+    
+        'enterprises' => [
+            'provider' => 'enterprises',
+            'table' => 'password_resets',
+            'expire' => 60,
         ],
     ],
 
