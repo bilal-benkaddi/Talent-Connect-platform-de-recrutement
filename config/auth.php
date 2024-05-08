@@ -115,15 +115,16 @@ return [
         ],
         'candidats' => [
             'provider' => 'candidats',
-            'table' => 'password_resets',
+            'table' => 'password_reset_tokens',
             'expire' => 60,
         ],
     
-        'enterprises' => [
-            'provider' => 'enterprises',
-            'table' => 'password_resets',
+        'entreprises' => [
+            'provider' => 'entreprises',
+            'table' => 'password_reset_tokens',
             'expire' => 60,
         ],
+        
     ],
 
     /*

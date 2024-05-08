@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Auth_candidats;
 
 use App\Http\Controllers\Controller;
@@ -33,16 +34,16 @@ class NewPasswordController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+
         $request->validate([
             'token' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|exists:candidats,email',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-
         // Here we will attempt to reset the user's password. If it is successful we
         // will update the password on an actual user model and persist it to the
         // database. Otherwise we will parse the error and return the response.
-        $status = Password::guard('candidate')->reset(
+        $status = Password::broker('candidats')->reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user) use ($request) {
                 $user->forceFill([
@@ -53,12 +54,11 @@ class NewPasswordController extends Controller
                 event(new PasswordReset($user));
             }
         );
-
         // If the password was successfully reset, we will redirect the user back to
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
         if ($status == Password::PASSWORD_RESET) {
-            return redirect()->route('login')->with('status', __($status));
+            return redirect()->route('login')->with('status', "We can't find a candidat with that email address.");
         }
 
         throw ValidationException::withMessages([
@@ -66,4 +66,3 @@ class NewPasswordController extends Controller
         ]);
     }
 }
-

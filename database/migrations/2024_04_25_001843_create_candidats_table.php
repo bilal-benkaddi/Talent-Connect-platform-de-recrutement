@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('Adresse_postale');
             $table->timestamp('verified_at')->nullable();
             $table->softDeletes();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

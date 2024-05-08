@@ -1,4 +1,5 @@
 <?php
+namespace App\Http\Controllers\Auth_candidats;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;

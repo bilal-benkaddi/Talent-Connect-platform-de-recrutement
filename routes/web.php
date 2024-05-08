@@ -43,10 +43,16 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+Route::prefix("entreprises")->name("entreprises.")->group(function(){
+    require __DIR__.'/entreprise.php';
+});
 
 Route::prefix("candidats")->name("candidats.")->group(function(){
     require __DIR__.'/candidat.php';
 });
+
+
+
 
 Route::get('/candidats',  [CandidatController::class , "index"])->name('candidats.index');
 

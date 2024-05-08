@@ -16,6 +16,7 @@ class Entreprise extends Authenticatable implements MustVerifyEmail
     use HasFactory, SoftDeletes,AuthenticatableTrait;
     protected $fillable = [
         'nom_Entreprise',
+        "logo",
         'secteur',
         'adresse',
         'code_postal',
@@ -23,8 +24,11 @@ class Entreprise extends Authenticatable implements MustVerifyEmail
         'Pays',
         'telephone',
         'email',
+        "hr_email",
         'password',
         'site_web',
+        'registre_decommerce',
+        "hr_nom"
     ];
     public function offreEmplois(){
         return $this->hasMany(Offre::class);

@@ -47,13 +47,8 @@ class RegisteredUserController extends Controller
 
 
         $Candidat = Candidat::create($validated);
-        $token = app('auth.password')->broker('candidats')->createToken($Candidat);
-
-        DB::table('password_reset_tokens')->insert([
-            'email' => $Candidat->email,
-            'token' => $token,
-            'created_at' => now(),
-        ]);
+        
+       
         event(new Registered($Candidat));
 
         Auth::login($Candidat);

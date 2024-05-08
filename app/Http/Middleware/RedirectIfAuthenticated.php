@@ -23,6 +23,9 @@ class RedirectIfAuthenticated
             if (Auth::guard($guard)->check() && $guard == "candidat") {
                 return redirect()->route("candidats.index");
             }
+            if (Auth::guard($guard)->check() && $guard == "entreprise") {
+                return redirect()->route("candidats.index");
+            }
             if (Auth::guard($guard)->check()) {
                 return redirect(RouteServiceProvider::HOME);
             }

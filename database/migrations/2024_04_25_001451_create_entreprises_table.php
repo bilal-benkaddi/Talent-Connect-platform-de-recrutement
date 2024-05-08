@@ -25,7 +25,10 @@ return new class extends Migration
             $table->string('hr_email')->unique();
             $table->string('password');
             $table->string('site_web');
+            $table->string('registre_decommerce');
+            $table->string('hr_nom');
             $table->timestamp('verified_at')->nullable();
+            $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
         });

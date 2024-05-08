@@ -17,7 +17,7 @@ class AuthenticateEntreprise
     public function handle(Request $request, Closure $next): Response
     {
         if(!Auth::guard("entreprise")->check()){
-            return redirect()->route("login")->with("error","login first");
+            return redirect()->route("entreprises.login")->with("error","login first");
         }else{
             return $next($request);
         }
