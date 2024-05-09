@@ -18,8 +18,13 @@ class PasswordController extends Controller
             'current_password' => ['required', 'current_password'],
             'password' => ['required', Password::defaults(), 'confirmed'],
         ]);
+        $user = $request->user("candidat");
+    
+        if (!Hash::check($request->current_password, $user->password)) {
+            return redirect()->back()->withErrors(['current_password' => 'Incorrect password']);
+        }
 
-        $request->user()->update([
+        $request->user("candidat")->update([
             'password' => Hash::make($validated['password']),
         ]);
 

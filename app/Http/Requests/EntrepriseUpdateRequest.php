@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Candidat;
+use App\Models\Entreprise;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CandidatUpdateRequest extends FormRequest
+class EntrepriseUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,7 +33,7 @@ class CandidatUpdateRequest extends FormRequest
                 'lowercase',
                 'email',
                 'max:255',
-                Rule::unique(Candidat::class)->ignore(auth('candidat')->id()),
+                Rule::unique(Entreprise::class)->ignore(auth('entreprise')->id()),
             ],
         ];
     }

@@ -21,10 +21,10 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check() && $guard == "candidat") {
-                return redirect()->route("candidats.index");
+                return redirect()->route("candidats.dashboard");
             }
             if (Auth::guard($guard)->check() && $guard == "entreprise") {
-                return redirect()->route("candidats.index");
+                return redirect()->route("entreprises.dashboard");
             }
             if (Auth::guard($guard)->check()) {
                 return redirect(RouteServiceProvider::HOME);
