@@ -35,7 +35,6 @@ export default function Login({ status, canResetPassword }) {
                     {status}
                 </div>
             )}
-            <h1>Candidats login</h1>
             <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="email" value="Email" />

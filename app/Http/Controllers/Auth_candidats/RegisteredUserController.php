@@ -18,19 +18,10 @@ use App\Providers\RouteServiceProvider;
 
 class RegisteredUserController extends Controller
 {
-    /**
-     * Display the registration view.
-     */
     public function create(): Response
     {
         return Inertia::render('Auth_candidats/Register');
     }
-
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
@@ -53,6 +44,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($Candidat);
 
-        return redirect()->route("candidats.index");
+        return redirect()->route("candidats.dashboard");
     }
 }

@@ -35,10 +35,10 @@ class Candidat extends Authenticatable implements MustVerifyEmail
 
     protected $hidden = [
         'password',
-        'password_reset_tokens',
+        'remember_token',
     ];
-
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 }

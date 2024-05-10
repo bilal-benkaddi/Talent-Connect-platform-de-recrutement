@@ -16,9 +16,6 @@ use Inertia\Response;
 
 class NewPasswordController extends Controller
 {
-    /**
-     * Display the password reset view.
-     */
     public function create(Request $request): Response
     {
         return Inertia::render('Auth_candidats/ResetPassword', [
@@ -26,12 +23,6 @@ class NewPasswordController extends Controller
             'token' => $request->route('token'),
         ]);
     }
-
-    /**
-     * Handle an incoming new password request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function store(Request $request): RedirectResponse
     {
 
@@ -40,9 +31,6 @@ class NewPasswordController extends Controller
             'email' => 'required|email|exists:candidats,email',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-        // Here we will attempt to reset the user's password. If it is successful we
-        // will update the password on an actual user model and persist it to the
-        // database. Otherwise we will parse the error and return the response.
         $status = Password::broker('candidats')->reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user) use ($request) {
@@ -54,11 +42,8 @@ class NewPasswordController extends Controller
                 event(new PasswordReset($user));
             }
         );
-        // If the password was successfully reset, we will redirect the user back to
-        // the application's home authenticated view. If there is an error we can
-        // redirect them back to where they came from with their error message.
         if ($status == Password::PASSWORD_RESET) {
-            return redirect()->route('login')->with('status', "We can't find a candidat with that email address.");
+            return redirect()->route('candidats.login')->with('status', __($status));
         }
 
         throw ValidationException::withMessages([

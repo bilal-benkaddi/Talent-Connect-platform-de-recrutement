@@ -63,7 +63,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                     <InputError className="mt-2" message={errors.email} />
                 </div>
 
-                {mustVerifyEmail && user.email_verified_at === null && (
+                {mustVerifyEmail && user.verified_at === null && (
                     <div>
                         <p className="text-sm mt-2 text-gray-800">
                             Your email address is unverified.

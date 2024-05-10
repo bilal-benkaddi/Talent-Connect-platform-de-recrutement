@@ -2,18 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Entreprise extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
-    use HasFactory, SoftDeletes,AuthenticatableTrait;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
     protected $fillable = [
         'nom_Entreprise',
         "logo",
@@ -36,10 +34,10 @@ class Entreprise extends Authenticatable implements MustVerifyEmail
     protected $guard = "entreprise";
     protected $hidden = [
         'password',
-        'password_reset_tokens',
+        'remember_token',
     ];
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 }

@@ -17,19 +17,10 @@ use App\Providers\RouteServiceProvider;
 
 class RegisteredUserController extends Controller
 {
-    /**
-     * Display the registration view.
-     */
     public function create(): Response
     {
         return Inertia::render('Auth_entreprises/Register');
     }
-
-    /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
@@ -47,7 +38,6 @@ class RegisteredUserController extends Controller
             'site_web' => 'min:3|max:120',
             'registre_decommerce' => "required|file|mimes:pdf|max:10240",
             "hr_nom" => "required|min:3|max:120",
-
         ]);
         $validated['registre_decommerce'] = $request->file('registre_decommerce')->store('registre_decommerce', 'public');
         $validated['logo'] = $request->file('logo')->store('logo', 'public');
@@ -58,6 +48,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($Entreprise);
 
-        return redirect()->route("candidats.index");
+        return redirect()->route("entreprises.dashboard");
     }
 }
