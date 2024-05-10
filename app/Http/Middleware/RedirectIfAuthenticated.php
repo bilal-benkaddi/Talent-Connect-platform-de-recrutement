@@ -20,16 +20,18 @@ class RedirectIfAuthenticated
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check() && $guard == "candidat") {
-                return redirect()->route("candidats.dashboard");
-            }
-            if (Auth::guard($guard)->check() && $guard == "entreprise") {
-                return redirect()->route("entreprises.dashboard");
-            }
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                switch ($guard) {
+                    case 'candidat':
+                        return redirect()->route('candidats.dashboard');
+                    case 'entreprise':
+                        return redirect()->route('entreprises.dashboard');
+                    default:
+                        return redirect(RouteServiceProvider::HOME);
+                }
             }
         }
+
         return $next($request);
     }
 }

@@ -19,7 +19,7 @@ class AuthenticateCandidat
         if(!Auth::guard("candidat")->check()){
             return redirect()->route("candidats.login")->with("error","login first");
         }else{
-             return $next($request);
+            return $next($request);
         }
        
     }

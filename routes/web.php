@@ -67,7 +67,7 @@ Route::delete('/candidats/{candidat}',  [CandidatController::class , "destroy"])
 
 
 
-//Route::resource('candidats', CandidatController::class);
+Route::resource('candidats', CandidatController::class);
 Route::resource('candidatures', CandidatureController::class);
 Route::resource('entreprises', EntrepriseController::class);
 Route::resource('offres', OffreController::class);
