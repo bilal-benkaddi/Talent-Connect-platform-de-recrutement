@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "@inertiajs/inertia-react": "^0.8.1",
-        "bootstrap": "^5.3.3"
+        "bootstrap": "^5.3.3",
+        "react-bootstrap": "^2.10.2"
     }
 }

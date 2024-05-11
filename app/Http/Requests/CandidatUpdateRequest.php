@@ -15,7 +15,7 @@ class CandidatUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return true; 
+        return true;
     }
 
     /**
@@ -35,6 +35,11 @@ class CandidatUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(Candidat::class)->ignore(auth('candidat')->id()),
             ],
+            'prenom' => ['required', 'string', 'max:255'],
+            'date_de_naissance' => ['required', 'date'],
+            'image' => ['nullable', 'string', 'max:255'],
+            'telephone' => ['nullable', 'string', 'max:255'],
+            'Adresse_postale' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

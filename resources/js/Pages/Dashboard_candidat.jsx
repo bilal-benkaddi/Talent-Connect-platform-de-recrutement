@@ -7,7 +7,7 @@ export default function Dashboard({ candidat }) {
             candidat={candidat}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Dashboard
+                    Dashboard Candidat
                 </h2>
             }
         >
@@ -21,20 +21,6 @@ export default function Dashboard({ candidat }) {
                         </div>
                         <div className="p-6 text-gray-900">
                             You're logged in!
-                        </div>
-                        <div className="p-6 text-gray-900">
-                        <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <li>
-                                        <Link className="dropdown-item" href={route('candidats.profile.edit')}>
-                                            Profile
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link className="dropdown-item" href={route('candidats.logout')} method="post">
-                                            Log Out
-                                        </Link>
-                                    </li>
-                                </ul>
                         </div>
                     </div>
                 </div>

@@ -23,7 +23,11 @@ export default function Dashboard({ entreprise }) {
                             You're logged in!
                         </div>
                         <div className="p-6 text-gray-900">
-                        <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <div className="dropdown">
+                                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <li>
                                         <Link className="dropdown-item" href={route('entreprises.profile.edit')}>
                                             Profile
@@ -34,7 +38,18 @@ export default function Dashboard({ entreprise }) {
                                             Log Out
                                         </Link>
                                     </li>
+                                    <li>
+                                        <Link className="dropdown-item" href="{route('offres.create')}">
+                                            Add New Offer
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link className="dropdown-item" href="{route('candidatures.index')}">
+                                            Show Applications per Offer
+                                        </Link>
+                                    </li>
                                 </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

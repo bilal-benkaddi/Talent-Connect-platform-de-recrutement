@@ -15,7 +15,7 @@ class EntrepriseUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return true; 
+        return true;
     }
 
     /**
@@ -27,6 +27,13 @@ class EntrepriseUpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'logo' => ['nullable', 'string', 'max:255'],
+            'adresse' => ['nullable', 'string', 'max:255'],
+            'code_postal' => ['nullable', 'string', 'max:255'],
+            'secteur' => ['nullable', 'string', 'max:255'],
+            'ville' => ['nullable', 'string', 'max:255'],
+            'Pays' => ['nullable', 'string', 'max:255'],
+            'telephone' => ['nullable', 'string', 'max:255'],
             'email' => [
                 'required',
                 'string',
@@ -35,6 +42,11 @@ class EntrepriseUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(Entreprise::class)->ignore(auth('entreprise')->id()),
             ],
+            'hr_email' => ['nullable', 'string', 'max:255'],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'site_web' => ['nullable', 'string', 'max:255'],
+            'registre_decommerce' => ['nullable', 'string', 'max:255'],
+            'hr_nom' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

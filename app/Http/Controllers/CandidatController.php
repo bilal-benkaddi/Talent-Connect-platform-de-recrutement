@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Profilecandidat;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class CandidatController extends Controller
 {
@@ -16,6 +17,9 @@ class CandidatController extends Controller
         $candidats = Candidat::all();
         return Inertia::render('candidats/index', [
             'candidats' => $candidats,
+            "candidat" => Auth::guard("candidat")->user(),
+            'mustVerifyEmail' => Auth::guard("candidat")->user() instanceof MustVerifyEmail,
+            'status' => session('status'),
         ]);
     }
 
