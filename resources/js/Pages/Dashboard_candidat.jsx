@@ -1,5 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayoutCandidats";
 import { Head, Link } from "@inertiajs/react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Dashboard({ candidat }) {
     return (

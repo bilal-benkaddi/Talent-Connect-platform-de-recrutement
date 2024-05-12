@@ -1,6 +1,9 @@
 <?php
 
 use Inertia\Inertia;
+use App\Models\Offre;
+use App\Models\Entreprise;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\OffreController;
@@ -26,10 +29,41 @@ Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
     ]);
 });
+
+
+Route::get('/welcome/user', function () {
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+    ]);
+})->name("welcome.user");
+
+
+Route::get('/welcome/candidat', function () {
+    return Inertia::render('Welcome_Candidat', [
+        "candidat" => Auth::guard("candidat")->user(),
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+    ]);
+})->name("welcome.candidat");
+
+
+
+Route::get('/welcome/entreprise', function () {
+    $entreprise = Auth::guard("entreprise")->user();
+    $canLogin = Route::has('entreprises.login');
+    $canRegister = Route::has('entreprises.register');
+    if(Auth::guard("entreprise")->user()){
+        $offers = Offre::with('entreprise')->where('entreprise_id', $entreprise->id)->get();
+    }else{
+        $offers =null;
+    }
+    return Inertia::render('Welcome_Entreprise', compact('entreprise', 'canLogin', 'canRegister', 'offers'));
+})->name("welcome.entreprise");
+
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -69,7 +103,10 @@ Route::delete('/candidats/{candidat}',  [CandidatController::class , "destroy"])
 
 Route::resource('candidats', CandidatController::class);
 Route::resource('candidatures', CandidatureController::class);
-Route::resource('entreprises', EntrepriseController::class);
-Route::resource('offres', OffreController::class);
+Route::resource('entreprises', EntrepriseController::class); */
 
- */
+Route::resource('offres', OffreController::class)->middleware("entreprise");
+
+Route::get('offres/index', [OffreController::class,"index"])->name("offres.index");
+
+Route::get('offres', [OffreController::class,"index"])->name("offres.index");

@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\Auth_Entreprises\AuthenticatedSessionController;
-use App\Http\Controllers\Auth_Entreprises\ConfirmablePasswordController;
-use App\Http\Controllers\Auth_Entreprises\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth_Entreprises\EmailVerificationPromptController;
-use App\Http\Controllers\Auth_Entreprises\NewPasswordController;
-use App\Http\Controllers\Auth_Entreprises\PasswordController;
-use App\Http\Controllers\Auth_Entreprises\PasswordResetLinkController;
-use App\Http\Controllers\Auth_Entreprises\RegisteredUserController;
-use App\Http\Controllers\Auth_Entreprises\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OffreController;
+use App\Http\Controllers\Auth_Entreprises\PasswordController;
+use App\Http\Controllers\Auth_Entreprises\NewPasswordController;
+use App\Http\Controllers\Auth_Entreprises\VerifyEmailController;
+use App\Http\Controllers\Auth_Entreprises\RegisteredUserController;
+use App\Http\Controllers\Auth_Entreprises\PasswordResetLinkController;
+use App\Http\Controllers\Auth_Entreprises\ConfirmablePasswordController;
+use App\Http\Controllers\Auth_Entreprises\AuthenticatedSessionController;
+use App\Http\Controllers\Auth_Entreprises\EmailVerificationPromptController;
+use App\Http\Controllers\Auth_Entreprises\EmailVerificationNotificationController;
 
 Route::middleware('guest:entreprise')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -56,4 +57,6 @@ Route::middleware('entreprise')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
+
+    Route::post('close/{offre}', [OffreController::class,"close"])->name("close");
 });

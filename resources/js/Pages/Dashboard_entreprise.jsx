@@ -1,5 +1,10 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayoutEntreprises";
 import { Head, Link } from "@inertiajs/react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Container from "react-bootstrap/Container";
+import Button from 'react-bootstrap/Button';
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export default function Dashboard({ entreprise }) {
     return (
@@ -22,35 +27,21 @@ export default function Dashboard({ entreprise }) {
                         <div className="p-6 text-gray-900">
                             You're logged in!
                         </div>
-                        <div className="p-6 text-gray-900">
-                            <div className="dropdown">
-                                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Actions
-                                </button>
-                                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li>
-                                        <Link className="dropdown-item" href={route('entreprises.profile.edit')}>
-                                            Profile
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link className="dropdown-item" href={route('entreprises.logout')} method="post">
-                                            Log Out
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link className="dropdown-item" href="{route('offres.create')}">
-                                            Add New Offer
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link className="dropdown-item" href="{route('candidatures.index')}">
-                                            Show Applications per Offer
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        <Container>
+                            <Row>
+                                <Col>
+                                    <Link href={route("offres.create")}>
+                                    <Button variant="outline-primary">Add New Offer</Button>
+                                    </Link>
+                                </Col>
+                                <Col>
+                                    <Link href={route("offres.index")}>
+                                    <Button variant="outline-success">Show All Offers</Button>
+                                        
+                                    </Link>
+                                </Col>
+                            </Row>
+                        </Container>
                     </div>
                 </div>
             </div>

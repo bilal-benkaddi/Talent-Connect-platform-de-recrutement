@@ -44,6 +44,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($Candidat);
 
-        return redirect()->route("candidats.dashboard");
+        return redirect()->route("welcome.candidat");
     }
 }
