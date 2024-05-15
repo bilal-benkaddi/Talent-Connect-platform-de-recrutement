@@ -10,8 +10,9 @@ class Candidature extends Model
 {
     use HasFactory ,SoftDeletes;
     protected $fillable = [
-        'offre_emploi_id',
+        'offre_id',
         'candidat_id',
+        "date_de_soumission",
         'cv',
         'lettre_de_motivation',
     ];

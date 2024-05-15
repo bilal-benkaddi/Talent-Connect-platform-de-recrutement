@@ -11,26 +11,36 @@ class OffreController extends Controller
 {
     public function index()
     {
-        $entreprise = Auth::guard("entreprise")->user();
-        $offers = Offre::with('entreprise')->get();
-        return Inertia::render('Offers/Index', [
-            'offers' => $offers,
-            "entreprise"=>$entreprise
-        ]);
+        if (Auth::guard("entreprise")->check()) {
+            $entreprise = Auth::guard("entreprise")->user();
+            $offers = Offre::with('entreprise')->get();
+            return Inertia::render('Offers/IndexEntreprise', [
+                'offers' => $offers,
+                "entreprise" => $entreprise
+            ]);
+        }
+        if (Auth::guard("candidat")->check()) {
+            $candidat = Auth::guard("candidat")->user();
+            $offers = Offre::with('entreprise')->get();
+            return Inertia::render('Offers/IndexCandidat', [
+                'offers' => $offers,
+                "candidat" => $candidat
+            ]);
+        }
     }
 
     public function create()
     {
         $entreprise = Auth::guard("entreprise")->user();
-        return Inertia::render('Offers/Create',[
-            "entreprise"=>$entreprise
+        return Inertia::render('Offers/Create', [
+            "entreprise" => $entreprise
         ]);
     }
     public function store(Request $request)
     {
         $entreprise_id = Auth::guard("entreprise")->user()->id;
         $validated = $request->validate([
-            'entreprise_id'=>"numeric",
+            'entreprise_id' => "numeric",
             'titre' => 'required|string',
             'domaine' => 'required|min:2',
             'niveau_etude' => 'min:4',
@@ -43,7 +53,7 @@ class OffreController extends Controller
             'date_Publication' => 'required|date',
             'date_limite_candidature' => 'required|date',
             'salaire' => 'numeric',
-            'type_contrat',
+            'type_contrat'=>"required",
         ]);
         $validated['entreprise_id'] = $entreprise_id;
         Offre::create($validated);
@@ -55,7 +65,7 @@ class OffreController extends Controller
         $entreprise = Auth::guard("entreprise")->user();
         return Inertia::render('Offers/Show', [
             'offre' => $offre,
-            "entreprise"=>$entreprise
+            "entreprise" => $entreprise
         ]);
     }
     public function close(Offre $offre)
@@ -69,12 +79,12 @@ class OffreController extends Controller
         $entreprise = Auth::guard("entreprise")->user();
         return Inertia::render('Offers/Edit', [
             'offre' => $offre,
-            "entreprise"=>$entreprise
+            "entreprise" => $entreprise
         ]);
     }
 
     public function update(Request $request, Offre $offre)
-    {	
+    {
         $validated = $request->validate([
             'titre' => 'required|string',
             'domaine' => 'required|min:2',
@@ -88,7 +98,7 @@ class OffreController extends Controller
             'date_Publication' => 'required|date',
             'date_limite_candidature' => 'required|date',
             'salaire' => 'numeric',
-            'type_contrat'=> 'required',
+            'type_contrat' => 'required',
             'entreprise_id' => 'numeric',
         ]);
         $offre->update($validated);

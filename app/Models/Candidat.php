@@ -27,6 +27,10 @@ class Candidat extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Candidature::class);
     }
+    public function offers()
+    {
+        return $this->hasMany(Offre::class);
+    }
 
     public function profile()
     {

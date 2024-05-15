@@ -3,11 +3,13 @@
 use Inertia\Inertia;
 use App\Models\Offre;
 use App\Models\Entreprise;
+use App\Models\Candidature;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\OffreController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CandidatController;
 use App\Http\Controllers\EntrepriseController;
 use App\Http\Controllers\CandidatureController;
@@ -33,35 +35,11 @@ Route::get('/', function () {
 });
 
 
-Route::get('/welcome/user', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-    ]);
-})->name("welcome.user");
+Route::get('/welcome/user', [WelcomeController::class,"welcomeUser"])->name("welcome.user");
 
+Route::get('/welcome/candidat', [WelcomeController::class,"welcomeCandidat"])->name("welcome.candidat");
 
-Route::get('/welcome/candidat', function () {
-    return Inertia::render('Welcome_Candidat', [
-        "candidat" => Auth::guard("candidat")->user(),
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-    ]);
-})->name("welcome.candidat");
-
-
-
-Route::get('/welcome/entreprise', function () {
-    $entreprise = Auth::guard("entreprise")->user();
-    $canLogin = Route::has('entreprises.login');
-    $canRegister = Route::has('entreprises.register');
-    if(Auth::guard("entreprise")->user()){
-        $offers = Offre::with('entreprise')->where('entreprise_id', $entreprise->id)->get();
-    }else{
-        $offers =null;
-    }
-    return Inertia::render('Welcome_Entreprise', compact('entreprise', 'canLogin', 'canRegister', 'offers'));
-})->name("welcome.entreprise");
+Route::get('/welcome/entreprise', [WelcomeController::class,"welcomeEntreprise"])->name("welcome.entreprise");
 
 
 
@@ -75,38 +53,36 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-Route::prefix("entreprises")->name("entreprises.")->group(function(){
-    require __DIR__.'/entreprise.php';
+Route::prefix("entreprises")->name("entreprises.")->group(function () {
+    require __DIR__ . '/entreprise.php';
 });
 
-Route::prefix("candidats")->name("candidats.")->group(function(){
-    require __DIR__.'/candidat.php';
+Route::prefix("candidats")->name("candidats.")->group(function () {
+    require __DIR__ . '/candidat.php';
 });
 
 
+Route::get('/candidatures/{candidature}/cv', [CandidatureController::class, 'viewCV'])->name('candidatures.cv');
+Route::get('/candidatures/{candidature}/lettre_motivation', [CandidatureController::class, 'viewLettreMotivation'])->name('candidatures.lettre_motivation');
 
 
-Route::get('/candidats',  [CandidatController::class , "index"])->name('candidats.index');
+Route::get('/candidats',  [CandidatController::class, "index"])->name('candidats.index');
 
 /*
 
-Route::get('/candidats',  [CandidatController::class , "index"])->name('candidats.index');
-Route::get('/candidats/create',  [CandidatController::class , "create"])->name('candidats.create');
-Route::post('/candidats',  [CandidatController::class , "store"])->name('candidats.store');
-Route::get('/candidats/{candidat}/edit',  [CandidatController::class , "edit"])->name('candidats.edit');
-Route::put('/candidats/{candidat}',  [CandidatController::class , "update"])->name('candidats.update');
-Route::delete('/candidats/{candidat}',  [CandidatController::class , "destroy"])->name('candidats.destroy');
-
-
-
-Route::resource('candidats', CandidatController::class);
-Route::resource('candidatures', CandidatureController::class);
-Route::resource('entreprises', EntrepriseController::class); */
-
-Route::resource('offres', OffreController::class)->middleware("entreprise");
-
+Route::resource('entreprises', EntrepriseController::class); 
+Route::resource('candidatures', CandidatureController::class)->middleware(["entreprise","auth"]);
 Route::get('offres/index', [OffreController::class,"index"])->name("offres.index");
 
 Route::get('offres', [OffreController::class,"index"])->name("offres.index");
+Route::post('offres', [OffreController::class,"Store"])->name("offers.store");
+*/
+Route::resource('offres', OffreController::class);
+
+
+
+Route::get('candidatures/create/{offer}', [CandidatureController::class, "create"])->name("candidatures.create");
+Route::post('candidatures/store', [CandidatureController::class, "store"])->name("candidatures.store");
+Route::get('candidatures', [CandidatureController::class, "index"])->name("candidatures.index");

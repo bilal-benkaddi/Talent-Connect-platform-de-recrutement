@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(Offre::class)->constrained('offres');
             $table->foreignIdFor(Candidat::class)->constrained('candidats');
             $table->date('date_de_soumission');
-            $table->enum('statut', ['accepted', 'pending', 'rejected']);
+            $table->enum('statut', ['accepted', 'pending', 'rejected'])->default('pending');
             $table->string('CV');
             $table->string('lettre_de_motivation');
             $table->softDeletes();

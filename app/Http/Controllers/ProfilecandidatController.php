@@ -45,9 +45,7 @@ class ProfilecandidatController extends Controller
         return Redirect::route('candidats.profile.edit');
     }
 
-    /**
-     * Delete the user's account.
-     */
+   
     public function destroy(Request $request): RedirectResponse
     {
         $request->validate([

@@ -178,7 +178,7 @@ const CreateOfferForm = (entreprise) => {
                         >
                             Cancel
                         </Link>
-                    </Form>{" "}
+                    </Form>
                 </div>
             </div>
         </AuthenticatedLayout>

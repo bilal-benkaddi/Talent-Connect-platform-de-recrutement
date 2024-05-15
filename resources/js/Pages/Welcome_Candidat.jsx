@@ -1,6 +1,7 @@
 import { Link, Head } from '@inertiajs/react';
 
-export default function Welcome({ candidat }) {
+export default function Welcome({ candidat,candidatures }) {
+    console.log(candidatures)
     return (
         <>
             <Head title="Welcome" />
@@ -32,8 +33,19 @@ export default function Welcome({ candidat }) {
                     )}
                 </div>
 
-                <div className="max-w-7xl mx-auto p-6 lg:p-8">
-                   
+                <div className="max-w-7xl mx-auto p-6 lg:p-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {candidatures !==null ? candidatures.map(candidature => (
+                        <div key={candidature.id} className="bg-white shadow-md rounded-lg p-6">
+                            <h2 className="text-lg font-semibold">{candidature.id}</h2>
+                            <p>{candidature.statut}</p>
+                            <div>
+                                <Link href={route('candidatures.cv', candidature.id)}>View CV</Link>
+                            </div>
+                            <div>
+                                <Link href={route('candidatures.lettre_motivation', candidature.id)}>View Lettre de Motivation</Link>
+                            </div>
+                        </div>
+                    )):<></>}
                 </div>
             </div>
 
