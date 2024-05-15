@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
-use App\Models\Offre;
 use App\Models\Candidature;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 class CandidatureController extends Controller
 {
-    /**constructor**/
     public function __construct(){
         $this->middleware('candidat')->only(["index","create","store","edit","update"]);
         $this->middleware('auth')->only(["edit","update","viewLettreMotivation","viewCV","destroy"]);
@@ -100,7 +98,6 @@ class CandidatureController extends Controller
     public function viewLettreMotivation(Candidature $candidature)
     {
         $lettreMotivationFilePath ="public/".$candidature->lettre_de_motivation; 
-
         return response()->download(Storage::path($lettreMotivationFilePath));
     }
 }
