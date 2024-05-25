@@ -20,7 +20,7 @@ export default function Welcome({ entreprise, offers }) {
         <>
             <Head title="Welcome" />
             <div className="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-                <div className="sm:fixed sm:top-0 sm:right-0 p-6 text-end">
+                <div className="sm:fixed sm:top-0 sm:right-0 p-6 text-end z-3">
                     {entreprise ? (
                         <Link
                             href={route("entreprises.dashboard")}
@@ -108,15 +108,17 @@ export default function Welcome({ entreprise, offers }) {
                                                         </strong>
                                                         {offer.type_emploi}
                                                         <br />
-                                                        <strong>
-                                                            Lieu:
-                                                        </strong>
+                                                        <strong>Lieu:</strong>
                                                         {offer.lieu}
                                                         <br />
                                                         <strong>
                                                             Description:
                                                         </strong>
-                                                        {offer.description}
+                                                        {offer.description.substring(
+                                                            0,
+                                                            25
+                                                        )}
+                                                        ...
                                                         <br />
                                                         <strong>
                                                             Date de Publication:
@@ -143,20 +145,33 @@ export default function Welcome({ entreprise, offers }) {
                                                         <br />
                                                         {differenceInDays <
                                                         0 ? (
-                                                            <span className="text-danger">
+                                                            <h4 className="text-danger">
                                                                 Offer closed
-                                                            </span>
+                                                            </h4>
                                                         ) : (
-                                                            <span>
-                                                                {
-                                                                    differenceInDays
-                                                                }
-                                                                {differenceInDays ===
-                                                                1
-                                                                    ? "day"
-                                                                    : "days"}
-                                                                left to apply
-                                                            </span>
+                                                            <div className="d-grid gap-2">
+                                                                <span className="text-success">
+                                                                    {
+                                                                        differenceInDays
+                                                                    }
+                                                                    {differenceInDays ===
+                                                                    1
+                                                                        ? " day "
+                                                                        : " days "}
+                                                                    left to
+                                                                    apply
+                                                                </span>
+                                                                <button
+                                                                    onClick={() => {
+                                                                        closeOffer(
+                                                                            offer.id
+                                                                        );
+                                                                    }}
+                                                                    className="btn btn-warning"
+                                                                >
+                                                                    Close Offer
+                                                                </button>
+                                                            </div>
                                                         )}
                                                     </Card.Text>
                                                     <div className="d-grid gap-2">
@@ -178,13 +193,6 @@ export default function Welcome({ entreprise, offers }) {
                                                             }}
                                                         >
                                                             Delete
-                                                        </button>
-                                                        <button onClick={() => {
-                                                                closeOffer(
-                                                                    offer.id
-                                                                );
-                                                            }} className="btn btn-warning">
-                                                            Close Offer
                                                         </button>
                                                     </div>
                                                 </Card.Body>

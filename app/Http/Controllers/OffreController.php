@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Models\Offre;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class OffreController extends Controller
 {
@@ -31,10 +33,14 @@ class OffreController extends Controller
 
     public function create()
     {
-        $entreprise = Auth::guard("entreprise")->user();
-        return Inertia::render('Offers/Create', [
-            "entreprise" => $entreprise
-        ]);
+        if (Auth::guard("entreprise")->user()) {
+            $entreprise = Auth::guard("entreprise")->user();
+            return Inertia::render('Offers/Create', [
+                "entreprise" => $entreprise
+            ]);
+        }
+
+        abort(403, "This action is unauthorized fllow back.", ["title" => "unauthorized"]);
     }
     public function store(Request $request)
     {
@@ -53,7 +59,7 @@ class OffreController extends Controller
             'date_Publication' => 'required|date',
             'date_limite_candidature' => 'required|date',
             'salaire' => 'numeric',
-            'type_contrat'=>"required",
+            'type_contrat' => "required",
         ]);
         $validated['entreprise_id'] = $entreprise_id;
         Offre::create($validated);
@@ -63,28 +69,44 @@ class OffreController extends Controller
     public function show(Offre $offre)
     {
         $entreprise = Auth::guard("entreprise")->user();
+        $candidatures = DB::table('candidatures')->where('offre_id', $offre->id)->get();
+        //dd('candidatures' , $candidatures,);
         return Inertia::render('Offers/Show', [
             'offre' => $offre,
-            "entreprise" => $entreprise
+            'entreprise' => $entreprise,
+            'candidatures' => $candidatures,
         ]);
     }
-    public function close(Offre $offre)
+
+    public function close(Request $request, Offre $offre)
     {
+        if (!$request->user("entreprise")->can('update', $offre)) {
+            abort(403, "This action is unauthorized. <a href=`/login`> to login<a/>", ["title" => "unauthorized <a href=`/login`> to login<a/>"]);
+        }
         $offre->update(['date_limite_candidature' => now()]);
         return redirect()->route('offres.index')->with('success', 'Offre closed successfully');
     }
 
-    public function edit(Offre $offre)
+    public function edit(Request $request, Offre $offre)
     {
-        $entreprise = Auth::guard("entreprise")->user();
-        return Inertia::render('Offers/Edit', [
-            'offre' => $offre,
-            "entreprise" => $entreprise
-        ]);
+        if (Auth::guard("entreprise")->user()) {
+            if ($request->user("entreprise")->can('update', $offre)) {
+                $entreprise = Auth::guard("entreprise")->user();
+                return Inertia::render('Offers/Edit', [
+                    'offre' => $offre,
+                    "entreprise" => $entreprise
+                ]);
+            }
+            //Gate::authorize('update', $offre);
+        }
+        abort(403, "This action is unauthorized fllow back.", ["title" => "unauthorized"]);
     }
 
     public function update(Request $request, Offre $offre)
     {
+        if (!$request->user("entreprise")->can('update', $offre)) {
+            abort(403, "This action is unauthorized. <a href=`/login`> to login<a/>", ["title" => "unauthorized <a href=`/login`> to login<a/>"]);
+        }
         $validated = $request->validate([
             'titre' => 'required|string',
             'domaine' => 'required|min:2',
@@ -105,8 +127,11 @@ class OffreController extends Controller
         return redirect()->route('offres.index')->with('success', 'Offre updated successfully');
     }
 
-    public function destroy(Offre $offre)
+    public function destroy(Request $request, Offre $offre)
     {
+        if (!$request->user("entreprise")->can('delete', $offre)) {
+            abort(403, "This action is unauthorized.", ["title" => "unauthorized"]);
+        }
         $offre->delete();
         return redirect()->route('offres.index')->with('success', 'Offre deleted successfully');
     }

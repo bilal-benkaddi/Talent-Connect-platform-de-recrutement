@@ -1,16 +1,10 @@
 <?php
 
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileentrepriseController;
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard_entreprise',[
-        'entreprise' => Auth::guard('entreprise')->user(),
-        'user' => Auth::guard('entreprise')->user(),
-    ]);
-})->middleware('entreprise')->name('dashboard');
+Route::get('/dashboard', [DashboardController::class ,"entrepriseDashboard"])->middleware('entreprise')->name('dashboard');
 
 Route::middleware('entreprise')->group(function () {
     Route::get('/profile', [ProfileentrepriseController::class, 'edit'])->name('profile.edit');

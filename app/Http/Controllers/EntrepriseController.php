@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
+use App\Models\Offre;
 use App\Models\Entreprise;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Inertia\Inertia;
 
 class EntrepriseController extends Controller
 {
@@ -42,11 +45,24 @@ class EntrepriseController extends Controller
 
     public function show(Entreprise $entreprise)
     {
+        $offers = DB::table('offres')->where('entreprise_id', $entreprise->id)->get();
+        //dd(['entreprise' => $entreprise,'offers' => $offers,]);
         return Inertia::render('Entreprises/Show', [
             'entreprise' => $entreprise,
+            'offers' => $offers,
         ]);
     }
 
+    public function showForUser(Offre $offre)
+    {
+
+        $candidatures = DB::table('candidatures')->where('offre_id', $offre->id)->get();
+        return Inertia::render('Entreprises/ShowForUser', [
+            'offre' => $offre,
+
+            'candidatures' => $candidatures,
+        ]);
+    }
     public function edit(Entreprise $entreprise)
     {
         return Inertia::render('Entreprises/Edit', [

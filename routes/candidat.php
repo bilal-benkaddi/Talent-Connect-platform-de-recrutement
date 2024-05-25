@@ -1,16 +1,10 @@
 <?php
 
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfilecandidatController;
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard_candidat',[
-        'candidat' => Auth::guard('candidat')->user(),
-        'user' => Auth::guard('candidat')->user(),
-    ]);
-})->middleware('candidat')->name('dashboard');
+Route::get('/dashboard', [DashboardController::class ,"candidatDashboard"])->middleware('candidat')->name('dashboard');
 
 Route::middleware('candidat')->group(function () {
     Route::get('/profile', [ProfilecandidatController::class, 'edit'])->name('profile.edit');

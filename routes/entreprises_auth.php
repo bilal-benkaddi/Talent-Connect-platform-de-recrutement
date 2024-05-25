@@ -12,7 +12,7 @@ use App\Http\Controllers\Auth_Entreprises\AuthenticatedSessionController;
 use App\Http\Controllers\Auth_Entreprises\EmailVerificationPromptController;
 use App\Http\Controllers\Auth_Entreprises\EmailVerificationNotificationController;
 
-Route::middleware('guest:entreprise')->group(function () {
+Route::middleware(['guest','guest:candidat' ,'guest:entreprise'])->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
 

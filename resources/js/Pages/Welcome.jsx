@@ -1,6 +1,9 @@
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, Head } from '@inertiajs/react';
+import { Card, Button } from 'react-bootstrap';
 
-export default function Welcome({ auth, laravelVersion, phpVersion }) {
+const Welcome = ({ auth, entreprises }) => {
     return (
         <>
             <Head title="Welcome" />
@@ -32,9 +35,52 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     )}
                 </div>
 
+                {auth.user ? (
                 <div className="max-w-7xl mx-auto p-6 lg:p-8">
-                   
-                </div>
+                    {entreprises.map((entreprise) => (
+                        <Card key={entreprise.id} className="mb-3">
+                            <Card.Body>
+                                <Card.Title>{entreprise.nom_Entreprise}</Card.Title>
+                                <Card.Img src={entreprise.logo} alt={entreprise.nom_Entreprise} className="mb-3" />
+                                <Card.Text>
+                                    <strong>Secteur:</strong> {entreprise.secteur}
+                                </Card.Text>
+                                <Card.Text>
+                                    <strong>Adresse:</strong> {entreprise.adresse}
+                                </Card.Text>
+                                <Card.Text>
+                                    <strong>Code Postal:</strong> {entreprise.code_postal}
+                                </Card.Text>
+                                <Card.Text>
+                                    <strong>Ville:</strong> {entreprise.ville}
+                                </Card.Text>
+                                <Card.Text>
+                                    <strong>Pays:</strong> {entreprise.Pays}
+                                </Card.Text>
+                                <Card.Text>
+                                    <strong>Téléphone:</strong> {entreprise.telephone}
+                                </Card.Text>
+                                <Card.Text>
+                                    <strong>Email:</strong> {entreprise.email}
+                                </Card.Text>
+                                <Card.Text>
+                                    <strong>HR Email:</strong> {entreprise.hr_email}
+                                </Card.Text>
+                                <Card.Text>
+                                    <strong>Site Web:</strong> {entreprise.site_web}
+                                </Card.Text>
+                                <Card.Text>
+                                    <strong>Registre de Commerce:</strong> {entreprise.registre_decommerce}
+                                </Card.Text>
+                                <Card.Text>
+                                    <strong>HR Nom:</strong> {entreprise.hr_nom}
+                                </Card.Text>
+                                <Button variant="primary" href="/">View Details</Button>
+                            </Card.Body>
+                        </Card>
+                    ))}
+                </div>):(<></>)
+                }
             </div>
 
             <style>{`
@@ -50,3 +96,5 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
         </>
     );
 }
+
+export default Welcome;

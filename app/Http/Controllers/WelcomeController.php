@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Offre;
+use App\Models\Entreprise;
 use App\Models\Candidature;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,24 +14,26 @@ class WelcomeController extends Controller
 {
     public function welcomeUser()
     {
+        $entreprises = Entreprise::all();
         return Inertia::render('Welcome', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
+            'entreprises' => $entreprises,
         ]);
     }
 
     public function welcomeCandidat()
     {
         if (Auth::guard("candidat")->user()) {
-            $candidatures = Candidature::where('candidat_id',  Auth::guard("candidat")->user()->id)->get();
+            $offers = Offre::all();
         } else {
-            $candidatures = null;
+            $offers = null;
         }
         return Inertia::render('Welcome_Candidat', [
             "candidat" => Auth::guard("candidat")->user(),
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'candidatures' => $candidatures,
+            'offers' => $offers,
         ]);
     }
 
