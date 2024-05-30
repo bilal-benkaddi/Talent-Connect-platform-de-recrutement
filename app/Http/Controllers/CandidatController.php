@@ -23,6 +23,24 @@ class CandidatController extends Controller
         ]);
     }
 
+    public function show($id)
+    {
+        $candidat = Candidat::find($id);
+        $profile = Profilecandidat::where('candidat_id', $candidat->id)->first();
+        if (auth("entreprise")->check()) {
+            $entreprise = Auth::guard("entreprise")->user();
+            return Inertia::render('candidats/showCandidat', [
+                'entreprise' => $entreprise,
+                'candidat' => $candidat,
+                'profile' => $profile,
+            ]);
+        }
+        return Inertia::render('candidats/Show', [
+            'candidat' => $candidat,
+            'profile' => $profile,
+        ]);
+    }
+
     public function create()
     {
         return Inertia::render('Candidats/Create');

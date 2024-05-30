@@ -46,7 +46,14 @@ class EntrepriseController extends Controller
     public function show(Entreprise $entreprise)
     {
         $offers = DB::table('offres')->where('entreprise_id', $entreprise->id)->get();
-        //dd(['entreprise' => $entreprise,'offers' => $offers,]);
+        if (auth()->check()) {
+            $user = Auth::user();
+            return Inertia::render('Entreprises/Show', [
+                'entreprise' => $entreprise,
+                'offers' => $offers,
+                'user' => $user,
+            ]);
+        }
         return Inertia::render('Entreprises/Show', [
             'entreprise' => $entreprise,
             'offers' => $offers,
@@ -55,11 +62,9 @@ class EntrepriseController extends Controller
 
     public function showForUser(Offre $offre)
     {
-
         $candidatures = DB::table('candidatures')->where('offre_id', $offre->id)->get();
         return Inertia::render('Entreprises/ShowForUser', [
             'offre' => $offre,
-
             'candidatures' => $candidatures,
         ]);
     }

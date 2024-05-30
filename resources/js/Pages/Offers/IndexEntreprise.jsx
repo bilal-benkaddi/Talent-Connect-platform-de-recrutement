@@ -92,9 +92,9 @@ const OfferTable = ({ offers, entreprise }) => {
                                                 <span className="text-success">
                                                     left {differenceInDays}
                                                     {differenceInDays == 1
-                                                        ? "day"
-                                                        : "days"}
-                                                    to close offer .
+                                                        ? " day "
+                                                        : " days "}
+                                                      to close offer .
                                                 </span>
                                             </div>
                                         )}

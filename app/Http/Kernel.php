@@ -72,7 +72,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'candidat' => \App\Http\Middleware\AuthenticateCandidat::class,
         'entreprise' => \App\Http\Middleware\AuthenticateEntreprise::class,
-        
+        'allow.only.specific.ip' => \App\Http\Middleware\AllowOnlySpecificIP::class,
     ];
 }
 

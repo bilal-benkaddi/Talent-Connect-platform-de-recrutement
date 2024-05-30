@@ -29,21 +29,59 @@ export default function Welcome({ entreprise, offers }) {
                             Dashboard entreprises
                         </Link>
                     ) : (
-                        <>
-                            <Link
-                                href={route("entreprises.login")}
-                                className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                            >
-                                Log in
-                            </Link>
-
-                            <Link
-                                href={route("entreprises.register")}
-                                className="ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                            >
-                                Register
-                            </Link>
-                        </>
+                        <div className="col-12 text-center">
+                            <h1 className="mb-4 display-4 text-primary">
+                                Welcome to Talent Connect
+                            </h1>
+                            <p className="mb-5 lead">
+                                Talent Connect is your premier platform for
+                                finding the perfect job opportunities. Whether
+                                you're a seasoned professional or just starting
+                                out, we have the right tools and connections to
+                                help you succeed in your career journey.
+                            </p>
+                            <p className="mb-4 text-muted">
+                                Join thousands of candidates who have found
+                                their dream jobs through our platform. Our
+                                user-friendly interface and powerful search
+                                capabilities make job hunting effortless and
+                                efficient.
+                            </p>
+                            <p className="mb-4">
+                                <strong>Why Choose Talent Connect?</strong>
+                            </p>
+                            <ul className="list-unstyled mb-4">
+                                <li className="mb-2">
+                                    <i className="bi bi-check-circle-fill text-success me-2"></i>
+                                    Personalized job recommendations based on
+                                    your profile and preferences.
+                                </li>
+                                <li className="mb-2">
+                                    <i className="bi bi-check-circle-fill text-success me-2"></i>
+                                    Access to exclusive job listings from top
+                                    companies.
+                                </li>
+                                <li className="mb-2">
+                                    <i className="bi bi-check-circle-fill text-success me-2"></i>
+                                    Career resources and tips to help you stand
+                                    out in the job market.
+                                </li>
+                            </ul>
+                            <div className="d-flex justify-content-center">
+                                <Link
+                                    href={route("entreprises.login")}
+                                    className="btn btn-primary me-3 btn-lg font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                >
+                                    Log in
+                                </Link>
+                                <Link
+                                    href={route("entreprises.register")}
+                                    className="btn btn-secondary me-3 btn-lg ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                >
+                                    Register
+                                </Link>
+                            </div>
+                        </div>
                     )}
                 </div>
 
@@ -175,6 +213,16 @@ export default function Welcome({ entreprise, offers }) {
                                                         )}
                                                     </Card.Text>
                                                     <div className="d-grid gap-2">
+                                                        offres
+                                                        <Link
+                                                            href={route(
+                                                                "offres.show",
+                                                                offer.id
+                                                            )}
+                                                            className="btn btn-primary"
+                                                        >
+                                                            show
+                                                        </Link>
                                                         <Link
                                                             href={route(
                                                                 "offres.edit",

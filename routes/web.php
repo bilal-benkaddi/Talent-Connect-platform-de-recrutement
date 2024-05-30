@@ -30,10 +30,7 @@ use App\Http\Controllers\Auth\LoginEntrepriseController;
 
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-    ]);
+    return Inertia::render('Accueil');
 });
 
 
@@ -43,7 +40,7 @@ Route::get('/welcome/user', [WelcomeController::class, "welcomeUser"])
 Route::get('/welcome/candidat', [WelcomeController::class, "welcomeCandidat"])
     ->name("welcome.candidat");
 
-Route::get('/entreprises', [WelcomeController::class, "welcomeEntreprise"])
+Route::get('/welcome/entreprises', [WelcomeController::class, "welcomeEntreprise"])
     ->name("welcome.entreprise");
 
 
@@ -74,6 +71,7 @@ Route::get('/candidatures/{candidature}/lettre_motivation', [CandidatureControll
 
 
 Route::get('/candidats',  [CandidatController::class, "index"])->name('candidats.index');
+Route::get('/candidats/{id}',  [CandidatController::class, "show"])->name('candidats.show');
 
 /*
 
@@ -84,15 +82,23 @@ Route::get('offres', [OffreController::class,"index"])->name("offres.index");
 Route::post('offres', [OffreController::class,"Store"])->name("offers.store");
 */
 Route::resource('offres', OffreController::class);
-Route::get('candidatures/create/{offer}', [CandidatureController::class, "create"])->name("candidatures.create");
-Route::post('candidatures/store', [CandidatureController::class, "store"])->name("candidatures.store");
-Route::get('candidatures', [CandidatureController::class, "index"])->name("candidatures.index");
-Route::get('candidatures/{candidature}', [CandidatureController::class, "show"])->name("candidatures.show");
+Route::get('candidatures/create/{offer}', [CandidatureController::class, "create"])
+    ->name("candidatures.create");
+Route::post('candidatures/store', [CandidatureController::class, "store"])
+    ->name("candidatures.store");
+Route::get('candidatures', [CandidatureController::class, "index"])
+    ->name("candidatures.index");
+Route::get('candidatures/{candidature}', [CandidatureController::class, "show"])
+    ->name("candidatures.show");
 
-Route::get('/candidatures/{candidature}/edit-status', [CandidatureController::class, 'editStatus'])->name('candidatures.editStatus');
-Route::post('/candidatures/{candidature}/update-status', [CandidatureController::class, 'updatestatus'])->name('candidatures.updateStatus');
-Route::resource('entreprises', EntrepriseController::class); 
+Route::get('/candidatures/{candidature}/edit-status', [CandidatureController::class, 'editStatus'])
+    ->name('candidatures.editStatus');
 
-Route::get('entreprises/{offre}/candidatures',[ EntrepriseController::class ,"showForUser"])->name("entreprises.candidatures"); 
+Route::post('/candidatures/{candidature}/update-status', [CandidatureController::class, 'updatestatus'])
+    ->name('candidatures.updateStatus');
+Route::resource('entreprises', EntrepriseController::class);
 
-//showForUser
+Route::get('entreprises/{offre}/candidatures', [EntrepriseController::class, "showForUser"])
+    ->middleware("auth")->name("entreprises.candidatures"); 
+
+

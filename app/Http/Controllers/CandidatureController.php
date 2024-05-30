@@ -113,7 +113,7 @@ class CandidatureController extends Controller
         $candidature->delete();
         return redirect()->route('candidatures.index')->with('success', 'Candidature deleted successfully');
     }
-    
+
     public function editStatus(Candidature $candidature)
     {
         return Inertia::render('Candidatures/EditStatus', [
@@ -121,12 +121,12 @@ class CandidatureController extends Controller
         ]);
     }
 
-    public function updatestatus(Request $request , Candidature $candidature)
+    public function updatestatus(Request $request, Candidature $candidature)
     {
         $validated = $request->validate([
             'status' => 'required|string',
         ]);
-        Candidature::where("id",$candidature->id)->update(['statut' => $validated["status"]]);
+        Candidature::where("id", $candidature->id)->update(['statut' => $validated["status"]]);
         //$candidature->update(['statut' => $validated]);
     }
 

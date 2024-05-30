@@ -27,7 +27,7 @@ class WelcomeController extends Controller
         if (Auth::guard("candidat")->user()) {
             $offers = Offre::all();
         } else {
-            $offers = null;
+            $offers = [];
         }
         return Inertia::render('Welcome_Candidat', [
             "candidat" => Auth::guard("candidat")->user(),
