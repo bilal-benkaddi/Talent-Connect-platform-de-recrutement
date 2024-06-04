@@ -40,7 +40,7 @@ export default function Welcome({ candidat, offers }) {
     return (
         <>
             <Head title="Welcome" />
-            <Container fluid >
+            <Container fluid>
                 <Row>
                     {candidat ? (
                         <Col
@@ -48,17 +48,15 @@ export default function Welcome({ candidat, offers }) {
                             className=" p-3 m-1  position-sticky h-100"
                             style={{ top: 0 }}
                         >
-                            <Form>
-                                <Form.Group controlId="searchDomaine">
-                                    <Form.Label>Search by Domaine</Form.Label>
-                                    <Form.Control
-                                        type="text"
-                                        placeholder="Enter domaine"
-                                        value={searchDomaine}
-                                        onChange={handleSearch}
-                                    />
-                                </Form.Group>
-                            </Form>
+                            <Form.Group controlId="searchDomaine">
+                                <Form.Label>Search by Domaine</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter domaine"
+                                    value={searchDomaine}
+                                    onChange={handleSearch}
+                                />
+                            </Form.Group>
                             <ListGroup className="mt-4">
                                 {uniqueDomaines.map((domaine, index) => (
                                     <ListGroup.Item
@@ -104,23 +102,19 @@ export default function Welcome({ candidat, offers }) {
                                         Welcome to Talent Connect
                                     </h1>
                                     <p className="mb-5 lead">
-                                        Talent Connect is your premier
-                                        platform for finding the perfect
-                                        job opportunities. Whether
-                                        you're a seasoned professional
-                                        or just starting out, we have
-                                        the right tools and connections
-                                        to help you succeed in your
-                                        career journey.
+                                        Talent Connect is your premier platform
+                                        for finding the perfect job
+                                        opportunities. Whether you're a seasoned
+                                        professional or just starting out, we
+                                        have the right tools and connections to
+                                        help you succeed in your career journey.
                                     </p>
                                     <p className="mb-4 text-muted">
-                                        Join thousands of candidates who
-                                        have found their dream jobs
-                                        through our platform. Our
-                                        user-friendly interface and
-                                        powerful search capabilities
-                                        make job hunting effortless and
-                                        efficient.
+                                        Join thousands of candidates who have
+                                        found their dream jobs through our
+                                        platform. Our user-friendly interface
+                                        and powerful search capabilities make
+                                        job hunting effortless and efficient.
                                     </p>
                                     <p className="mb-4">
                                         <strong>
@@ -130,36 +124,30 @@ export default function Welcome({ candidat, offers }) {
                                     <ul className="list-unstyled mb-4">
                                         <li className="mb-2">
                                             <i className="bi bi-check-circle-fill text-success me-2"></i>
-                                            Personalized job
-                                            recommendations based on
-                                            your profile and
+                                            Personalized job recommendations
+                                            based on your profile and
                                             preferences.
                                         </li>
                                         <li className="mb-2">
                                             <i className="bi bi-check-circle-fill text-success me-2"></i>
-                                            Access to exclusive job
-                                            listings from top companies.
+                                            Access to exclusive job listings
+                                            from top companies.
                                         </li>
                                         <li className="mb-2">
                                             <i className="bi bi-check-circle-fill text-success me-2"></i>
-                                            Career resources and tips to
-                                            help you stand out in the
-                                            job market.
+                                            Career resources and tips to help
+                                            you stand out in the job market.
                                         </li>
                                     </ul>
                                     <div className="d-flex justify-content-center">
                                         <Link
-                                            href={route(
-                                                "candidats.login"
-                                            )}
+                                            href={route("candidats.login")}
                                             className="btn btn-primary me-3 btn-lg"
                                         >
                                             Log in
                                         </Link>
                                         <Link
-                                            href={route(
-                                                "candidats.register"
-                                            )}
+                                            href={route("candidats.register")}
                                             className="btn btn-secondary btn-lg"
                                         >
                                             Register
@@ -230,7 +218,7 @@ export default function Welcome({ candidat, offers }) {
                                                     </strong>{" "}
                                                     {offer.description.substring(
                                                         0,
-                                                        25
+                                                        20
                                                     )}
                                                     ...
                                                     <br />

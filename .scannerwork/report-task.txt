@@ -1,6 +1,6 @@
-projectKey=projetFinFormation
+projectKey=pff_project
 serverUrl=http://localhost:9000
-serverVersion=10.3.0.82913
-dashboardUrl=http://localhost:9000/dashboard?id=projetFinFormation
-ceTaskId=AY9Zw1PTIGXruyklCWWG
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AY9Zw1PTIGXruyklCWWG
+serverVersion=10.5.0.89998
+dashboardUrl=http://localhost:9000/dashboard?id=pff_project
+ceTaskId=81b70595-9e51-4a6a-bb2b-baf99f236506
+ceTaskUrl=http://localhost:9000/api/ce/task?id=81b70595-9e51-4a6a-bb2b-baf99f236506

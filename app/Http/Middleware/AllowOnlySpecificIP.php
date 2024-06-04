@@ -12,7 +12,7 @@ class AllowOnlySpecificIP
         $requestIP = $request->ip();
 
         if (!in_array($requestIP, $allowedIP)) {
-            return abort(401);
+            return abort(404);
         }
 
         return $next($request);

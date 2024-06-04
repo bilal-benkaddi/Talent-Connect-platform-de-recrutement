@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Carbon\Carbon;
 
 class EntrepriseController extends Controller
 {
@@ -19,6 +20,38 @@ class EntrepriseController extends Controller
             'entreprises' => $entreprises,
         ]);
     }
+
+
+
+    public function offersPerMonth()
+    {
+        $entreprises = Entreprise::with('offreEmplois')->get();
+
+        $data = $entreprises->map(function ($entreprise) {
+            $monthlyOffers = Offre::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as count')
+                ->where('entreprise_id', $entreprise->id)
+                ->groupBy('year', 'month')
+                ->orderBy('year', 'desc')
+                ->orderBy('month', 'desc')
+                ->get()
+                ->mapWithKeys(function ($item) {
+                    return [Carbon::createFromDate($item->year, $item->month, 1)->format('Y-m') => $item->count];
+                });
+
+            return [
+                'entreprise' => $entreprise->nom_Entreprise,
+                'monthly_offers' => $monthlyOffers,
+            ];
+        });
+        //dd($data);
+        return Inertia::render('Dashboard', ['data' => $data]);
+    }
+
+
+
+
+
+
 
     public function create()
     {

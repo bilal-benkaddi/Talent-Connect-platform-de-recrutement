@@ -15,7 +15,7 @@ class OffreController extends Controller
     {
         if (Auth::guard("entreprise")->check()) {
             $entreprise = Auth::guard("entreprise")->user();
-            $offers = Offre::with('entreprise')->get();
+            $offers = Offre::with('entreprise')->orderBy("created_at", "desc")->get();
             return Inertia::render('Offers/IndexEntreprise', [
                 'offers' => $offers,
                 "entreprise" => $entreprise
@@ -23,7 +23,7 @@ class OffreController extends Controller
         }
         if (Auth::guard("candidat")->check()) {
             $candidat = Auth::guard("candidat")->user();
-            $offers = Offre::with('entreprise')->get();
+            $offers = Offre::with('entreprise')->orderBy("created_at", "desc")->get();
             return Inertia::render('Offers/IndexCandidat', [
                 'offers' => $offers,
                 "candidat" => $candidat
@@ -45,6 +45,11 @@ class OffreController extends Controller
     public function store(Request $request)
     {
         $entreprise_id = Auth::guard("entreprise")->user()->id;
+
+        if (!$request->filled('date_Publication')) {
+            $request->merge(['date_Publication' => now()]);
+        }
+
         $validated = $request->validate([
             'entreprise_id' => "numeric",
             'titre' => 'required|string',
@@ -56,14 +61,40 @@ class OffreController extends Controller
             'type_emploi' => 'required',
             'lieu' => 'required',
             'description' => 'required',
-            'date_Publication' => 'required|date',
-            'date_limite_candidature' => 'required|date',
+            'date_Publication' => 'required|date|before_or_equal:' . now()->addDays(10),
+            'date_limite_candidature' => 'required|date|after_or_equal:date_Publication',
             'salaire' => 'numeric',
             'type_contrat' => "required",
+        ], [
+            'titre.required' => 'Le titre est obligatoire.',
+            'titre.string' => 'Le titre doit être une chaîne de caractères.',
+            'domaine.required' => 'Le domaine est obligatoire.',
+            'domaine.min' => 'Le domaine doit avoir au moins :min caractères.',
+            'niveau_etude.min' => 'Le niveau d\'étude doit avoir au moins :min caractères.',
+            'experience.min' => 'L\'expérience doit avoir au moins :min caractères.',
+            'nombre_poste.required' => 'Le nombre de postes est obligatoire.',
+            'secteur_activite.required' => 'Le secteur d\'activité est obligatoire.',
+            'type_emploi.required' => 'Le type d\'emploi est obligatoire.',
+            'lieu.required' => 'Le lieu est obligatoire.',
+            'description.required' => 'La description est obligatoire.',
+            'date_Publication.required' => 'La date de publication est obligatoire.',
+            'date_Publication.date' => 'La date de publication doit être une date valide.',
+            'date_Publication.before_or_equal' => 'La date de publication doit être aujourd\'hui ou dans les 10 jours à venir.',
+            'date_limite_candidature.required' => 'La date limite de candidature est obligatoire.',
+            'date_limite_candidature.date' => 'La date limite de candidature doit être une date valide.',
+            'date_limite_candidature.after_or_equal' => 'La date limite de candidature doit être égale ou après la date de publication.',
+            'salaire.numeric' => 'Le salaire doit être un nombre.',
+            'type_contrat.required' => 'Le type de contrat est obligatoire.',
         ]);
+
+        if (strtotime($validated['date_limite_candidature']) - strtotime($validated['date_Publication']) < 10 * 24 * 60 * 60) {
+            $validated['date_Publication'] = now()->addDays(10)->format('Y-m-d');
+        }
+
         $validated['entreprise_id'] = $entreprise_id;
         Offre::create($validated);
-        return redirect()->route('offres.index')->with('success', 'Offre created successfully');
+
+        return redirect()->route('offres.index')->with('success', 'Offre créée avec succès.');
     }
 
     public function show(Offre $offre)

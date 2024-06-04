@@ -45,9 +45,9 @@ Route::get('/welcome/entreprises', [WelcomeController::class, "welcomeEntreprise
 
 
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/dashboard', [EntrepriseController::class, 'offersPerMonth'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -100,5 +100,3 @@ Route::resource('entreprises', EntrepriseController::class);
 
 Route::get('entreprises/{offre}/candidatures', [EntrepriseController::class, "showForUser"])
     ->middleware("auth")->name("entreprises.candidatures"); 
-
-

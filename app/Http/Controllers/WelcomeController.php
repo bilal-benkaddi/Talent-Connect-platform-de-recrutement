@@ -25,7 +25,8 @@ class WelcomeController extends Controller
     public function welcomeCandidat()
     {
         if (Auth::guard("candidat")->user()) {
-            $offers = Offre::all();
+            //$offers = Offre::all();
+            $offers = Offre::with('entreprise')->orderBy("created_at", "desc")->get();
         } else {
             $offers = [];
         }
@@ -43,7 +44,7 @@ class WelcomeController extends Controller
         $canLogin = Route::has('entreprises.login');
         $canRegister = Route::has('entreprises.register');
         if (Auth::guard("entreprise")->user()) {
-            $offers = Offre::with('entreprise')->where('entreprise_id', $entreprise->id)->get();
+            $offers = Offre::with('entreprise')->where('entreprise_id', $entreprise->id)->orderBy("created_at", "desc")->get();
         } else {
             $offers = null;
         }
