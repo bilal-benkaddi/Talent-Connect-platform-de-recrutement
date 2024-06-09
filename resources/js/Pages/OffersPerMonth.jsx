@@ -7,7 +7,7 @@ const OffersPerMonth = ({ auth, data }) => {
         
             <div className="container">
                 <Head title="Offers Per Month" />
-                <OffersChart data={data} width="1000px" height="600px" /> {/* Adjust width and height as needed */}
+                <OffersChart data={data} width="1000px" height="600px" /> 
             </div>
     );
 };

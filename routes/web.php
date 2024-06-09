@@ -100,3 +100,4 @@ Route::resource('entreprises', EntrepriseController::class);
 
 Route::get('entreprises/{offre}/candidatures', [EntrepriseController::class, "showForUser"])
     ->middleware("auth")->name("entreprises.candidatures"); 
+

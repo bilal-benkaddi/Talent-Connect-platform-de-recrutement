@@ -4,6 +4,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
+import Translate from '@/Pages/Translater';
 
 export default function AuthenticatedEntreprises({ entreprise, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -24,6 +25,9 @@ export default function AuthenticatedEntreprises({ entreprise, header, children 
                                 <NavLink href={route('entreprises.dashboard')} active={route().current('entreprises.dashboard')}>
                                     Dashboard
                                 </NavLink>
+                            </div>
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <Translate/>
                             </div>
                         </div>
 
